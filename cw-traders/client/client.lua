@@ -9,7 +9,10 @@ function canInteract(trader)
         else
             if GetClockHours() >= trader.available.from and GetClockHours() < trader.available.to then return true else return false end
         end
+    else
+        return true
     end
+    
 end
 
 --- Create trader joes

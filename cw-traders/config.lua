@@ -10,6 +10,16 @@ local smelterGuy = {
     available = {from = 9, to = 17}
 }
 
+local bumGuy = {
+    name = 'bumGuy',
+    model = 'u_m_y_militarybum',
+    tradeName = 'BeerToMeth',
+    tradeLabel = 'Trade 5 beers for a bag of meth',
+    coords = vector4(934.5, -1903.48, 31.12, 89.13),
+    animation = 'WORLD_HUMAN_BUM_STANDING',
+}
+
 Config.Traders = {
     smelterGuy,
+    bumGuy
 }

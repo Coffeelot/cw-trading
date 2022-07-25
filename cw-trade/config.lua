@@ -9,6 +9,15 @@ local SandwichToBeer = {
     toAmount = 1,
 }
 
+local BeerToMeth = {
+    tradeName = 'BeerToMeth',
+    tradeLabel = 'Beer to meth',
+    fromItem = 'beer',
+    fromAmount = 5,
+    toItem = 'meth',
+    toAmount = 1,
+}
+
 local PhoneToCash = {
     tradeName = 'PhoneToCash',
     tradeLabel = 'Phone to cash',
@@ -20,4 +29,5 @@ local PhoneToCash = {
 Config.Trades = {
     ['SandwichToBeer'] = SandwichToBeer,
     ['PhoneToCash'] = PhoneToCash,
+    ['BeerToMeth'] = BeerToMeth
 }
