@@ -2,7 +2,6 @@ Config = {}
 
 local SandwichToBeer = {
     tradeName = 'SandwichToBeer',
-    tradeLabel = 'Sandwich To Beer',
     fromItem = 'sandwich',
     fromAmount = 2,
     toItem = 'beer',
@@ -11,7 +10,6 @@ local SandwichToBeer = {
 
 local BeerToMeth = {
     tradeName = 'BeerToMeth',
-    tradeLabel = 'Beer to meth',
     fromItem = 'beer',
     fromAmount = 5,
     toItem = 'meth',
