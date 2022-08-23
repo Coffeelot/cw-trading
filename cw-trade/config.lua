@@ -1,5 +1,9 @@
 Config = {}
 
+
+Config.Debug = false
+Config.UseTokens = false
+
 local SandwichToBeer = {
     tradeName = 'SandwichToBeer',
     fromItem = 'sandwich',
@@ -24,8 +28,34 @@ local PhoneToCash = {
     toCash = { min = 10, max = 20 }, 
 }
 
+--------------------------
+-- RELATED TO CW-TOKENS --
+--------------------------
+local TokenToUzi = {
+    tradeName = 'TokenToUzi',
+    tradeLabel = 'Trade token for gear',
+    fromItem = 'cw_token',
+    tokenValue = 'tradeUzi',
+    fromAmount = 1,
+    toItem = 'weapon_microsmg',
+    toAmount = 1
+}
+
+local TokenToMilRifle = {
+    tradeName = 'TokenToMilRifle',
+    tradeLabel = 'Trade token for gear',
+    fromItem = 'cw_token',
+    tokenValue = 'tradeMilRifle',
+    fromAmount = 1,
+    toItem = 'weapon_militaryrifle',
+    toAmount = 1
+}
+
+
 Config.Trades = {
     ['SandwichToBeer'] = SandwichToBeer,
     ['PhoneToCash'] = PhoneToCash,
-    ['BeerToMeth'] = BeerToMeth
+    ['BeerToMeth'] = BeerToMeth,
+    ['TokenToUzi'] = TokenToUzi,
+    ['TokenToMilRifle'] = TokenToMilRifle,
 }

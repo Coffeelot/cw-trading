@@ -1,5 +1,7 @@
 Config = {}
 
+Config.UseTokens = false
+
 local smelterGuy = {
     name = 'smelterGuy',
     model = 's_m_m_lathandy_01',
@@ -23,3 +25,32 @@ Config.Traders = {
     smelterGuy,
     bumGuy
 }
+
+--------------------------
+-- RELATED TO CW-TOKENS --
+--------------------------
+
+local uziGuy = {
+    name = 'uziGuy',
+    model = 'csb_ramp_gang',
+    tradeLabel = 'Trade token for gear',
+    tradeName = 'TokenToUzi',
+    coords = vector4(139.08, -1921.67, 21.38, 298.39),
+    animation = 'WORLD_HUMAN_DRUG_DEALER',
+}
+
+local milRifleGuy = {
+    name = 'milRifleGuy',
+    model = 'ig_old_man1a',
+    tradeLabel = 'Trade token for gear',
+    tradeName = 'TokenToMilRifle',
+    coords = vector4(880.39, 2888.02, 56.51, 311.04),
+    animation = 'WORLD_HUMAN_BINOCULARS',
+}
+
+Config.TokenTraders = {
+    uziGuy,
+    milRifleGuy
+}
+
+-- animation pastebin https://pastebin.com/6mrYTdQv
