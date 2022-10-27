@@ -21,9 +21,19 @@ local bumGuy = {
     animation = 'WORLD_HUMAN_BUM_STANDING',
 }
 
+local golfGuy = {
+    name = 'golfGuy',
+    model = 'a_f_y_golfer_01',
+    tradeName = 'FoodToGolfClub',
+    tradeLabel = 'Trade 1 coffee and 2 sandwiches for a golf club',
+    coords = vector4(-1135.78, 1.76, 48.48, 121.0),
+    animation = 'PROP_HUMAN_SEAT_BENCH',
+}
+
 Config.Traders = {
     smelterGuy,
-    bumGuy
+    bumGuy,
+    golfGuy
 }
 
 --------------------------

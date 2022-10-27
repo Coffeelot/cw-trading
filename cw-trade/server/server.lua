@@ -9,30 +9,44 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
            print('Doing token trade')
         end
         TriggerEvent('cw-tokens:server:TakeToken', src, trade.tokenValue)
-        Player.Functions.AddItem(trade.toItem, trade.toAmount)
-        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[trade.toItem], "add")
+        for i, item in pairs(trade.toItems) do
+            Player.Functions.AddItem(item.name, item.amount)
+            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
+        end
     else
-        
-        Player.Functions.RemoveItem(trade.fromItem, trade.fromAmount)
-        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[trade.fromItem], "remove")
+        for i, item in pairs(trade.fromItems) do
+            Player.Functions.RemoveItem(item.name, item.amount)
+            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "remove")
+        end
+        for i, item in pairs(trade.toItems) do
+            Player.Functions.AddItem(item.name, item.amount)
+            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
+        end
     
         if trade.toCash then
-            local payout = math.random(trade.toCash.min, trade.toCash.max)
-            Player.Functions.AddMoney('cash', tonumber(payout)) 
-        elseif trade.toBills then
             if Config.Debug then
-               print('Entered toBills server script')
+                print('Doing Cash Trade')
+             end
+            local payout = math.random(trade.toCash.min, trade.toCash.max)
+            Player.Functions.AddMoney('cash', tonumber(payout))
+        end
+        if trade.toBills then
+            if Config.Debug then
+               print('Doing Dirty Bills Trade')
             end
             local info = {
                 worth = math.random(trade.toBills.min, trade.toBills.max)
             }
             Player.Functions.AddItem('markedbills', math.random(1,2), false, info)
             TriggerClientEvent('inventory:client:ItemBox',src, QBCore.Shared.Items['markedbills'], "add")
-        else
-            Player.Functions.AddItem(trade.toItem, trade.toAmount)
-            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[trade.toItem], "add")
         end
-    
+        if trade.toCrypto then
+            if Config.Debug then
+                print('Doing Crypto Trade')
+             end
+            local payout = math.random(trade.toCrypto.min, trade.toCrypto.max)
+            Player.Functions.AddMoney('crypto', tonumber(payout)) 
+        end    
     end
 
 end)

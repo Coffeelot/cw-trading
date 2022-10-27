@@ -6,26 +6,41 @@ Config.UseTokens = false
 
 local SandwichToBeer = {
     tradeName = 'SandwichToBeer',
-    fromItem = 'sandwich',
-    fromAmount = 2,
-    toItem = 'beer',
-    toAmount = 1,
+    fromItems = {
+        { name = 'sandwich', amount = 2 },
+    },
+    toItems = {
+        { name = 'beer', amount = 1 }
+    },
 }
 
 local BeerToMeth = {
     tradeName = 'BeerToMeth',
-    fromItem = 'beer',
-    fromAmount = 5,
-    toItem = 'meth',
-    toAmount = 1,
+    fromItems = {
+        { name = 'beer', amount = 5 }
+    },
+    toItems = {
+        { name = 'meth', amount = 1 }
+    },
 }
 
 local PhoneToCash = {
     tradeName = 'PhoneToCash',
-    tradeLabel = 'Phone to cash',
-    fromItem = 'phone',
-    fromAmount = 1,
+    fromItems = {
+        { name = 'phone', amount = 1 },
+    },
     toCash = { min = 10, max = 20 }, 
+}
+
+local FoodToGolfClub = {
+    tradeName = 'FoodToGolfClub',
+    fromItems = {
+        { name = 'sandwich', amount = 2 },
+        { name = 'coffee', amount = 1 }
+    },
+    toItems = {
+        { name = 'weapon_golfclub', amount = 1 }
+    },
 }
 
 --------------------------
@@ -33,22 +48,24 @@ local PhoneToCash = {
 --------------------------
 local TokenToUzi = {
     tradeName = 'TokenToUzi',
-    tradeLabel = 'Trade token for gear',
-    fromItem = 'cw_token',
+    fromItems = {
+        { name = 'cw_token', amount = 1 }
+    },
     tokenValue = 'tradeUzi',
-    fromAmount = 1,
-    toItem = 'weapon_microsmg',
-    toAmount = 1
+    toItems = {
+        { name = 'weapon_microsmg', amount = 1 }
+    },
 }
 
 local TokenToMilRifle = {
     tradeName = 'TokenToMilRifle',
-    tradeLabel = 'Trade token for gear',
-    fromItem = 'cw_token',
+    fromItems = {
+        { name = 'cw_token', amount = 1 }
+    },
     tokenValue = 'tradeMilRifle',
-    fromAmount = 1,
-    toItem = 'weapon_militaryrifle',
-    toAmount = 1
+    toItems = {
+        { name = 'weapon_militaryrifle', amount = 1 }
+    },
 }
 
 
@@ -56,6 +73,7 @@ Config.Trades = {
     ['SandwichToBeer'] = SandwichToBeer,
     ['PhoneToCash'] = PhoneToCash,
     ['BeerToMeth'] = BeerToMeth,
+    ['FoodToGolfClub'] = FoodToGolfClub,
     ['TokenToUzi'] = TokenToUzi,
     ['TokenToMilRifle'] = TokenToMilRifle,
 }
