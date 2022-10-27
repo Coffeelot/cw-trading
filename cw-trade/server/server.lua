@@ -10,15 +10,24 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
         end
         TriggerEvent('cw-tokens:server:TakeToken', src, trade.tokenValue)
         for i, item in pairs(trade.toItems) do
+            if Config.Debug then
+                print('adding items to pockets (from token trade)')
+             end
             Player.Functions.AddItem(item.name, item.amount)
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
         end
     else
         for i, item in pairs(trade.fromItems) do
+            if Config.Debug then
+               print('removing items from pockets')
+            end
             Player.Functions.RemoveItem(item.name, item.amount)
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "remove")
         end
         for i, item in pairs(trade.toItems) do
+            if Config.Debug then
+               print('adding items to pockets')
+            end
             Player.Functions.AddItem(item.name, item.amount)
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
         end
