@@ -23,21 +23,21 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
             end
             Player.Functions.RemoveItem(item.name, item.amount)
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "remove")
-        end
-        for i, item in pairs(trade.toItems) do
-            if Config.Debug then
-               print('adding items to pockets')
-            end
-            Player.Functions.AddItem(item.name, item.amount)
-            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
-        end
-    
+        end    
         if trade.toCash then
             if Config.Debug then
                 print('Doing Cash Trade')
              end
             local payout = math.random(trade.toCash.min, trade.toCash.max)
             Player.Functions.AddMoney('cash', tonumber(payout))
+        else
+            for i, item in pairs(trade.toItems) do
+                if Config.Debug then
+                   print('adding items to pockets')
+                end
+                Player.Functions.AddItem(item.name, item.amount)
+                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
+            end 
         end
         if trade.toBills then
             if Config.Debug then

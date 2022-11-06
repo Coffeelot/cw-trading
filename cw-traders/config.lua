@@ -30,10 +30,20 @@ local golfGuy = {
     animation = 'PROP_HUMAN_SEAT_BENCH',
 }
 
+local phoneGuy = {
+    name = 'golfGuy',
+    model = 'ig_lifeinvad_02',
+    tradeName = 'PhoneToCash',
+    tradeLabel = 'Trade 1 phone for cash',
+    coords = vector4(1137.17, -472.37, 66.57, 254.41),
+    animation = 'WORLD_HUMAN_AA_COFFEE',
+}
+
 Config.Traders = {
     smelterGuy,
     bumGuy,
-    golfGuy
+    golfGuy,
+    phoneGuy
 }
 
 --------------------------
