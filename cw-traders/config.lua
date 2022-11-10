@@ -1,6 +1,9 @@
 Config = {}
+Config.Debug = false
+
 
 Config.UseTokens = false
+Config.UseRGB = false
 
 local smelterGuy = {
     name = 'smelterGuy',
@@ -46,10 +49,29 @@ Config.Traders = {
     phoneGuy
 }
 
+------------------------------
+-- RELATED TO CW-RGBPAINTER --
+------------------------------
+
+local paintGuy = {
+    name = 'paintGuy',
+    model = 's_m_m_gaffer_01',
+    multiTrades = true, -- this line is needed for multiTrades
+    trades = {
+        { tradeLabel = 'Trade cash to paint gun', tradeName = 'CashToPaintGun' },
+        { tradeLabel = 'Trade cash to paint canisters', tradeName = 'CashToPaintCanisters' },
+        { tradeLabel = 'Trade cash to paint remover', tradeName = 'CashToPaintRemovalSpray' },
+    }, 
+    coords = vector4(875.2, -1014.9, 31.1, 4.14),
+    animation = 'WORLD_HUMAN_SEAT_WALL',
+}
+ 
+Config.RGBTraders = {
+    paintGuy,
+}
 --------------------------
 -- RELATED TO CW-TOKENS --
 --------------------------
-
 local uziGuy = {
     name = 'uziGuy',
     model = 'csb_ramp_gang',
@@ -58,6 +80,7 @@ local uziGuy = {
     coords = vector4(139.08, -1921.67, 21.38, 298.39),
     animation = 'WORLD_HUMAN_DRUG_DEALER',
 }
+ 
 
 local milRifleGuy = {
     name = 'milRifleGuy',
@@ -72,5 +95,6 @@ Config.TokenTraders = {
     uziGuy,
     milRifleGuy
 }
+
 
 -- animation pastebin https://pastebin.com/6mrYTdQv

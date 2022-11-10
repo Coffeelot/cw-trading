@@ -2,6 +2,7 @@ Config = {}
 
 
 Config.Debug = false
+
 Config.UseTokens = false
 
 local SandwichToBeer = {
@@ -29,7 +30,8 @@ local PhoneToCash = {
     fromItems = {
         { name = 'phone', amount = 1 },
     },
-    toCash = { min = 10, max = 20 }, 
+    toMoneyType = 'cash',
+    toMoney = { min = 10, max = 20 } 
 }
 
 local FoodToGolfClub = {
@@ -40,6 +42,36 @@ local FoodToGolfClub = {
     },
     toItems = {
         { name = 'weapon_golfclub', amount = 1 }
+    },
+}
+
+------------------------------
+-- RELATED TO CW-RGBPAINTER --
+------------------------------
+local CashToPaintGun = {
+    tradeName = 'CashToPaintGun',
+    fromMoney = 1000,
+    fromMoneyType = 'cash',
+    toItems = {
+        { name = 'paint_gun', amount = 1 }
+    },
+}
+
+local CashToPaintCanisters = {
+    tradeName = 'CashToPaintCanisters',
+    fromMoney = 100,
+    fromMoneyType = 'cash',
+    toItems = {
+        { name = 'paint_canister', amount = 10 }
+    },
+}
+
+local CashToPaintRemovalSpray = {
+    tradeName = 'CashToPaintRemovalSpray',
+    fromMoney = 80,
+    fromMoneyType = 'cash',
+    toItems = {
+        { name = 'paint_removal_spray', amount = 10 }
     },
 }
 
@@ -74,6 +106,9 @@ Config.Trades = {
     ['PhoneToCash'] = PhoneToCash,
     ['BeerToMeth'] = BeerToMeth,
     ['FoodToGolfClub'] = FoodToGolfClub,
+    ['CashToPaintGun'] = CashToPaintGun,
+    ['CashToPaintCanisters'] = CashToPaintCanisters,
+    ['CashToPaintRemovalSpray'] = CashToPaintRemovalSpray,
     ['TokenToUzi'] = TokenToUzi,
     ['TokenToMilRifle'] = TokenToMilRifle,
 }

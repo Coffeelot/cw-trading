@@ -17,27 +17,46 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
         end
     else
-        for i, item in pairs(trade.fromItems) do
+        if trade.fromMoney then
             if Config.Debug then
-               print('removing items from pockets')
+                print('Handling a from money trade')
             end
-            Player.Functions.RemoveItem(item.name, item.amount)
-            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "remove")
-        end    
-        if trade.toCash then
+            local moneyType = 'cash'
+            if trade.fromMoneyType then
+                moneyType = trade.fromMoneyType
+            end
+            Player.Functions.RemoveMoney(moneyType, trade.fromMoney)
+        end
+        if trade.fromItems then
+            for i, item in pairs(trade.fromItems) do
+                if Config.Debug then
+                   print('removing items from pockets')
+                end
+                Player.Functions.RemoveItem(item.name, item.amount)
+                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "remove")
+            end
+        end
+
+        if trade.toMoney then
             if Config.Debug then
-                print('Doing Cash Trade')
-             end
-            local payout = math.random(trade.toCash.min, trade.toCash.max)
-            Player.Functions.AddMoney('cash', tonumber(payout))
-        else
+                print('Doing To Money Trade')
+            end
+            local moneyType = 'cash'
+            if trade.toMoneyType then
+                moneyType = trade.toMoneyType
+            end
+            local payout = math.random(trade.toMoney.min, trade.toMoney.max)
+            Player.Functions.AddMoney(moneyType, tonumber(payout))
+        end
+
+        if trade.toItems then
             for i, item in pairs(trade.toItems) do
                 if Config.Debug then
                    print('adding items to pockets')
                 end
                 Player.Functions.AddItem(item.name, item.amount)
                 TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
-            end 
+            end
         end
         if trade.toBills then
             if Config.Debug then
