@@ -1,7 +1,7 @@
 Config = {}
 
 
-Config.Debug = false
+Config.Debug = true
 
 Config.UseTokens = false
 

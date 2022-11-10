@@ -3,7 +3,7 @@ Config.Debug = false
 
 
 Config.UseTokens = false
-Config.UseRGB = false
+Config.UseRGB = true
 
 local smelterGuy = {
     name = 'smelterGuy',

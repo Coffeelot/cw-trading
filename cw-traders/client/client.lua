@@ -14,6 +14,39 @@ local function canInteract(trader)
     end
 end
 
+local function getOptions(trader)
+    local options = {}
+    if trader.multiTrades then
+        for i,trade in pairs(trader.trades) do
+            print(trade.tradeLabel)
+            local option = { 
+                type = "client",
+                event = "cw-trade:client:attemptTrade",
+                icon = "fas fa-handshake",
+                label = trade.tradeLabel,
+                tradeName = trade.tradeName,
+                canInteract = function()
+                    return canInteract(trader)
+                end
+            }
+            table.insert(options, option)
+        end
+    else
+        options = {
+            { 
+                type = "client",
+                event = "cw-trade:client:attemptTrade",
+                icon = "fas fa-handshake",
+                label = trader.tradeLabel,
+                tradeName = trader.tradeName,
+                canInteract = function()
+                    return canInteract(trader)
+                end
+            }}
+    end
+    return options
+end
+
 --- Create trader joes
 CreateThread(function()
     for i,v in pairs(Config.Traders) do
@@ -33,18 +66,7 @@ CreateThread(function()
             blockevents = true,
             scenario = animation,
             target = {
-                options = {
-                    { 
-                        type = "client",
-                        event = "cw-trade:client:attemptTrade",
-                        icon = "fas fa-handshake",
-                        label = v.tradeLabel,
-                        tradeName = v.tradeName,
-                        canInteract = function()
-                            return canInteract(v)
-                        end
-                    },               
-                },
+                options = getOptions(v),
                 distance = 3.0 
             },
             spawnNow = true,
@@ -69,18 +91,7 @@ CreateThread(function()
                 blockevents = true,
                 scenario = animation,
                 target = {
-                    options = {
-                        { 
-                            type = "client",
-                            event = "cw-trade:client:attemptTrade",
-                            icon = "fas fa-handshake",
-                            label = v.tradeLabel,
-                            tradeName = v.tradeName,
-                            canInteract = function()
-                                return canInteract(v)
-                            end
-                        },               
-                    },
+                    options = getOptions(v),
                     distance = 3.0 
                 },
                 spawnNow = true,
@@ -96,35 +107,6 @@ CreateThread(function()
             else
                 animation = "WORLD_HUMAN_STAND_IMPATIENT"
             end
-    
-            local options = {}
-            if v.multiTrades then
-                for i,trade in pairs(v.trades) do
-                    local option = { 
-                        type = "client",
-                        event = "cw-trade:client:attemptTrade",
-                        icon = "fas fa-handshake",
-                        label = trade.tradeLabel,
-                        tradeName = trade.tradeName,
-                        canInteract = function()
-                            return canInteract(v)
-                        end
-                    }
-                    table.insert(options, option)
-                end
-            else
-                options = {
-                    { 
-                        type = "client",
-                        event = "cw-trade:client:attemptTrade",
-                        icon = "fas fa-handshake",
-                        label = v.tradeLabel,
-                        tradeName = v.tradeName,
-                        canInteract = function()
-                            return canInteract(v)
-                        end
-                    }}
-            end
 
             exports['qb-target']:SpawnPed({
                 model = v.model,
@@ -135,7 +117,7 @@ CreateThread(function()
                 blockevents = true,
                 scenario = animation,
                 target = {
-                    options = options,
+                    options = getOptions(v),
                     distance = 3.0 
                 },
                 spawnNow = true,
