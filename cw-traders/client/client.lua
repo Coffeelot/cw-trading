@@ -16,7 +16,7 @@ end
 
 local function getOptions(trader)
     local options = {}
-    if trader.multiTrades then
+    if trader.trades then
         for i,trade in pairs(trader.trades) do
             print(trade.tradeLabel)
             local option = { 

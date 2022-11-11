@@ -45,6 +45,39 @@ local FoodToGolfClub = {
     },
 }
 
+-----------------------------------------
+-- Examples for trading with item info --
+----------------------------------------
+local RollsToMeth = {
+    tradeName = 'RollsToMeth',
+    fromItems = {
+        { name = 'rolls', amount = 10 },
+    },
+    toItems = {
+        { name = 'meth', amount = 10 }
+    },
+}
+
+local RollsToHeavyPistol = {
+    tradeName = 'RollsToHeavyPistol',
+    fromItems = {
+        { name = 'rolls', amount = 100 },
+    },
+    toItems = {
+        { name = 'weapon_heavypistol', amount = 1, info = { serie = ""}}
+    },
+}
+
+local RollsToUzi = {
+    tradeName = 'RollsToUzi',
+    fromItems = {
+        { name = 'rolls', amount = 200 },
+    },
+    toItems = {
+        { name = 'weapon_microsmg', amount = 1, info = { serie = ""} }
+    },
+}
+
 ------------------------------
 -- RELATED TO CW-RGBPAINTER --
 ------------------------------
@@ -106,6 +139,9 @@ Config.Trades = {
     ['PhoneToCash'] = PhoneToCash,
     ['BeerToMeth'] = BeerToMeth,
     ['FoodToGolfClub'] = FoodToGolfClub,
+    ['RollsToMeth'] = RollsToMeth,
+    ['RollsToHeavyPistol'] = RollsToHeavyPistol,
+    ['RollsToUzi'] = RollsToUzi,
     ['CashToPaintGun'] = CashToPaintGun,
     ['CashToPaintCanisters'] = CashToPaintCanisters,
     ['CashToPaintRemovalSpray'] = CashToPaintRemovalSpray,

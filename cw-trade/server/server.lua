@@ -54,7 +54,11 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
                 if Config.Debug then
                    print('adding items to pockets')
                 end
-                Player.Functions.AddItem(item.name, item.amount)
+                if item.info then
+                    Player.Functions.AddItem(item.name, item.amount, nil, item.info)
+                else
+                    Player.Functions.AddItem(item.name, item.amount)
+                end
                 TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
             end
         end

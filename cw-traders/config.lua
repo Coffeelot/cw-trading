@@ -42,11 +42,23 @@ local phoneGuy = {
     animation = 'WORLD_HUMAN_AA_COFFEE',
 }
 
+local shadyGuy = { -- Note that this guy is NOT included in the below Config.Traders, as he uses items not included with stock qb-core (rolled bills)
+    name = 'shadyGuy',
+    model = 'g_m_y_famfor_01',
+    trades = {
+        { tradeLabel = 'Trade 10 rolls to 10 bags of meth', tradeName = 'RollsToMeth' },
+        { tradeLabel = 'Trade 200 rolls to heavy pistol', tradeName = 'RollsToHeavyPistol' },
+        { tradeLabel = 'Trade 300 rolls to uzi', tradeName = 'RollsToUzi' },
+    }, 
+    coords = vector4(1131.48, -2202.64, 31.7, 137.99),
+    animation = 'WORLD_HUMAN_DRUG_DEALER_HARD', 
+}
+
 Config.Traders = {
     smelterGuy,
     bumGuy,
     golfGuy,
-    phoneGuy
+    phoneGuy,
 }
 
 ------------------------------
@@ -56,7 +68,6 @@ Config.Traders = {
 local paintGuy = {
     name = 'paintGuy',
     model = 's_m_m_gaffer_01',
-    multiTrades = true, -- this line is needed for multiTrades
     trades = {
         { tradeLabel = 'Trade cash to paint gun', tradeName = 'CashToPaintGun' },
         { tradeLabel = 'Trade cash to paint canisters', tradeName = 'CashToPaintCanisters' },
