@@ -1,4 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject() 
+local useDebug = Config.Debug
 
 local function attemptTrade(trade)
     TriggerEvent('animations:client:EmoteCommandStart', {"argue2"})
@@ -9,12 +10,12 @@ local function attemptTrade(trade)
         disableCombat = true,
         }, {
         }, {}, {}, function() -- Done
-            if Config.Debug then
+            if useDebug then
                print('Tokens: ', Config.UseTokens)
                print('Token value: ', trade.tokenValue)
             end
             if Config.UseTokens and trade.tokenValue ~= nil then
-                if Config.Debug then
+                if useDebug then
                 print('Doing token trade')
                 end
                 local tokens = nil
@@ -24,7 +25,7 @@ local function attemptTrade(trade)
                 end)
                 Wait(100)
                 if tokens[tokenName] ~= nil then
-                    if Config.Debug then
+                    if useDebug then
                     print('found a token with '..tokenName)
                     end
                     TriggerEvent('animations:client:EmoteCommandStart', {"c"})
@@ -34,7 +35,7 @@ local function attemptTrade(trade)
                     QBCore.Functions.Notify('You do not have the right token on you.' , 'error')        
                 end
             else
-                if Config.Debug then
+                if useDebug then
                    print('Trade was initiated - calling server side')
                 end
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
@@ -49,23 +50,23 @@ end
 RegisterNetEvent('cw-trade:client:attemptTrade', function(data)
     local tradeName = data.tradeName
     local trade = Config.Trades[tradeName]
-    if Config.Debug then
+    if useDebug then
         print('trade name: ', tradeName)
     end
     if trade then 
         local amountOfItemsPlayerHas = 0
         if trade.fromItems then
-            if Config.Debug then
+            if useDebug then
                print('amount of From items:', #trade.fromItems)
             end
             for i,item in pairs(trade.fromItems) do
                 if QBCore.Functions.HasItem(item.name , item.amount) then
-                    if Config.Debug then
+                    if useDebug then
                        print('Player has '..item.amount..' '..item.name)
                     end
                     amountOfItemsPlayerHas = amountOfItemsPlayerHas + 1
                 else
-                    if Config.Debug then
+                    if useDebug then
                        print('Player doesnt have '..item.amount..' '..item.name)
                     end
                     if not QBCore.Shared.Items[item.name] then
@@ -77,7 +78,7 @@ RegisterNetEvent('cw-trade:client:attemptTrade', function(data)
                 end
             end
     
-            if Config.Debug then
+            if useDebug then
                print('amountOfItemsPlayerHas', amountOfItemsPlayerHas, 'amount of from items:', #trade.fromItems )
             end
         
@@ -87,7 +88,7 @@ RegisterNetEvent('cw-trade:client:attemptTrade', function(data)
                 attemptTrade(trade)
             end
         else
-            if Config.Debug then
+            if useDebug then
                 print('Handling a cash trade without items')
                 print('Amount: ', trade.fromMoney)
             end
@@ -102,4 +103,9 @@ RegisterNetEvent('cw-trade:client:attemptTrade', function(data)
         TriggerEvent('animations:client:EmoteCommandStart', {"damn"})
         QBCore.Functions.Notify('Trade doesnt exist', 'error')
     end 
+end)
+
+RegisterNetEvent('cw-trade:client:toggleDebug', function(debug)
+   print('Setting debug to',debug)
+   useDebug = debug
 end)

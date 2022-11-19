@@ -1,6 +1,6 @@
-local QBCore = exports['qb-core']:GetCoreObject() 
-
-
+local QBCore = exports['qb-core']:GetCoreObject()
+local useDebug = Config.Debug
+local Entities = {}
 
 local function canInteract(trader) 
     if trader.available then
@@ -18,7 +18,9 @@ local function getOptions(trader)
     local options = {}
     if trader.trades then
         for i,trade in pairs(trader.trades) do
-            print(trade.tradeLabel)
+            if useDebug then
+               print(trade.tradeLabel)
+            end
             local option = { 
                 type = "client",
                 event = "cw-trade:client:attemptTrade",
@@ -57,7 +59,7 @@ CreateThread(function()
             animation = "WORLD_HUMAN_STAND_IMPATIENT"
         end
 
-        exports['qb-target']:SpawnPed({
+        Entities[#Entities+1] =  exports['qb-target']:SpawnPed({
             model = v.model,
             coords = v.coords,
             minusOne = true,
@@ -82,7 +84,7 @@ CreateThread(function()
                 animation = "WORLD_HUMAN_STAND_IMPATIENT"
             end
     
-            exports['qb-target']:SpawnPed({
+            Entities[#Entities+1] = exports['qb-target']:SpawnPed({
                 model = v.model,
                 coords = v.coords,
                 minusOne = true,
@@ -108,7 +110,7 @@ CreateThread(function()
                 animation = "WORLD_HUMAN_STAND_IMPATIENT"
             end
 
-            exports['qb-target']:SpawnPed({
+            Entities[#Entities+1] =  exports['qb-target']:SpawnPed({
                 model = v.model,
                 coords = v.coords,
                 minusOne = true,
@@ -126,4 +128,19 @@ CreateThread(function()
         end     
     end
 
+end)
+
+RegisterNetEvent('cw-trade:client:toggleDebug', function(debug)
+   print('Setting debug to',debug)
+   useDebug = debug
+end)
+
+AddEventHandler('onResourceStop', function (resource)
+   if resource ~= GetCurrentResourceName() then return end
+   for i, entity in pairs(Entities) do
+       print('deleting', entity)
+       if DoesEntityExist(entity) then
+          DeleteEntity(entity)
+       end
+    end
 end)

@@ -118,7 +118,51 @@ local TokenToUzi = {
     },
     tokenValue = 'tradeUzi',
     toItems = {
-        { name = 'weapon_microsmg', amount = 1 }
+        { name = 'weapon_microsmg', amount = 1, info = { serie = ""}}
+    },
+}
+
+local TokenToPistol = {
+    tradeName = 'TokenToPistol',
+    fromItems = {
+        { name = 'cw_token', amount = 1, }
+    },
+    tokenValue = 'tradePistol',
+    toItems = {
+        { name = 'weapon_pistol', amount = 1, info = { serie = ""}}
+    },
+}
+
+local TokenToSawedOff = {
+    tradeName = 'TokenToSawedOff',
+    fromItems = {
+        { name = 'cw_token', amount = 1, }
+    },
+    tokenValue = 'tradeSawedOff',
+    toItems = {
+        { name = 'weapon_sawnoffshotgun', amount = 1, info = { serie = ""}}
+    },
+}
+
+local TokenToMolotov = {
+    tradeName = 'TokenToMolotov',
+    fromItems = {
+        { name = 'cw_token', amount = 1, }
+    },
+    tokenValue = 'tradeMolotov',
+    toItems = {
+        { name = 'weapon_molotov', amount = 1, info = { serie = ""}}
+    },
+}
+
+local TokenToDoubleBarrel = {
+    tradeName = 'TokenToDoubleBarrel',
+    fromItems = {
+        { name = 'cw_token', amount = 1, }
+    },
+    tokenValue = 'tradeDoubleBarrel',
+    toItems = {
+        { name = 'weapon_dbshotgun', amount = 1, info = { serie = ""}}
     },
 }
 
@@ -129,7 +173,7 @@ local TokenToMilRifle = {
     },
     tokenValue = 'tradeMilRifle',
     toItems = {
-        { name = 'weapon_militaryrifle', amount = 1 }
+        { name = 'weapon_militaryrifle', amount = 1,  info = { serie = ""}}
     },
 }
 
@@ -146,5 +190,9 @@ Config.Trades = {
     ['CashToPaintCanisters'] = CashToPaintCanisters,
     ['CashToPaintRemovalSpray'] = CashToPaintRemovalSpray,
     ['TokenToUzi'] = TokenToUzi,
+    ['TokenToPistol'] = TokenToPistol,
+    ['TokenToSawedOff'] = TokenToSawedOff,
+    ['TokenToMolotov'] = TokenToMolotov,
+    ['TokenToDoubleBarrel'] = TokenToMilRifle,
     ['TokenToMilRifle'] = TokenToMilRifle,
 }

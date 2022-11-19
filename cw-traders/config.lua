@@ -2,7 +2,7 @@ Config = {}
 Config.Debug = false
 
 
-Config.UseTokens = false
+Config.UseTokens = true
 Config.UseRGB = true
 
 local smelterGuy = {
@@ -86,12 +86,25 @@ Config.RGBTraders = {
 local uziGuy = {
     name = 'uziGuy',
     model = 'csb_ramp_gang',
-    tradeLabel = 'Trade token for gear',
-    tradeName = 'TokenToUzi',
+    trades = {
+        { tradeLabel = 'Trade token for uzi', tradeName = 'TokenToUzi', },
+        { tradeLabel = 'Trade token for pistol', tradeName = 'TokenToPistol' },
+        { tradeLabel = 'Trade token for sawed off', tradeName = 'TokenToSawedOff' },
+    },
     coords = vector4(139.08, -1921.67, 21.38, 298.39),
     animation = 'WORLD_HUMAN_DRUG_DEALER',
 }
- 
+
+local hoboGuy = {
+    name = 'hoboGuy',
+    model = 'a_m_o_tramp_01',
+    trades = {
+        { tradeLabel = 'Trade token for molotov', tradeName = 'TokenToMolotov', },
+        { tradeLabel = 'Trade token for double barrel sawed off', tradeName = 'TokenToDoubleBarrel' },
+    },
+    coords = vector4(1443.26, 6331.79, 23.98, 2.27),
+    animation = 'WORLD_HUMAN_LEANING',
+}
 
 local milRifleGuy = {
     name = 'milRifleGuy',
@@ -104,7 +117,8 @@ local milRifleGuy = {
 
 Config.TokenTraders = {
     uziGuy,
-    milRifleGuy
+    milRifleGuy,
+    hoboGuy
 }
 
 

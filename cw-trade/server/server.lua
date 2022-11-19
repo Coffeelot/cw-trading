@@ -1,16 +1,17 @@
 local QBCore = exports['qb-core']:GetCoreObject() 
+local useDebug = Config.Debug
 
 RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
     local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
 
     if Config.UseTokens and trade.tokenValue ~= nil then
-        if Config.Debug then
+        if useDebug then
            print('Doing token trade')
         end
         TriggerEvent('cw-tokens:server:TakeToken', src, trade.tokenValue)
         for i, item in pairs(trade.toItems) do
-            if Config.Debug then
+            if useDebug then
                 print('adding items to pockets (from token trade)')
              end
             Player.Functions.AddItem(item.name, item.amount)
@@ -18,7 +19,7 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
         end
     else
         if trade.fromMoney then
-            if Config.Debug then
+            if useDebug then
                 print('Handling a from money trade')
             end
             local moneyType = 'cash'
@@ -29,7 +30,7 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
         end
         if trade.fromItems then
             for i, item in pairs(trade.fromItems) do
-                if Config.Debug then
+                if useDebug then
                    print('removing items from pockets')
                 end
                 Player.Functions.RemoveItem(item.name, item.amount)
@@ -38,7 +39,7 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
         end
 
         if trade.toMoney then
-            if Config.Debug then
+            if useDebug then
                 print('Doing To Money Trade')
             end
             local moneyType = 'cash'
@@ -51,7 +52,7 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
 
         if trade.toItems then
             for i, item in pairs(trade.toItems) do
-                if Config.Debug then
+                if useDebug then
                    print('adding items to pockets')
                 end
                 if item.info then
@@ -63,7 +64,7 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
             end
         end
         if trade.toBills then
-            if Config.Debug then
+            if useDebug then
                print('Doing Dirty Bills Trade')
             end
             local info = {
@@ -73,7 +74,7 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
             TriggerClientEvent('inventory:client:ItemBox',src, QBCore.Shared.Items['markedbills'], "add")
         end
         if trade.toCrypto then
-            if Config.Debug then
+            if useDebug then
                 print('Doing Crypto Trade')
              end
             local payout = math.random(trade.toCrypto.min, trade.toCrypto.max)
@@ -82,3 +83,9 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
     end
 
 end)
+
+QBCore.Commands.Add('cwdebugtrade', 'toggle debug for trade', {}, true, function(source, args)
+    useDebug = not useDebug
+    print('debug is now:', useDebug)
+    TriggerClientEvent('cw-trade:client:toggleDebug',source, useDebug)
+end, 'admin')
