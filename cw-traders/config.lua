@@ -115,10 +115,39 @@ local milRifleGuy = {
     animation = 'WORLD_HUMAN_BINOCULARS',
 }
 
+local eastSideGuy = {
+    name = 'eastSideGuy',
+    model = 'a_f_m_tramp_01',
+    trades = {
+        { tradeLabel = 'Trade token for 30 meth baggies', tradeName = 'TokenToMeth', },
+        { tradeLabel = 'Trade token for 30 crack baggies', tradeName = 'TokenToCrack' },
+    },
+    coords = vector4(931.56, -1499.05, 30.33, 40.57),
+    animation = 'WORLD_HUMAN_BUM_STANDING',
+}
+
+local weedGuy = {
+    name = 'weedGuy',
+    model = 'a_m_m_hillbilly_02',
+    trades = {
+        { tradeLabel = 'Trade token for 5 AK seeds', tradeName = 'TokenToAKSeed' },
+        { tradeLabel = 'Trade token for 5 Amnesia seeds', tradeName = 'TokenToAmnesiaSeed' },
+        { tradeLabel = 'Trade token for 5 OG Kush seeds', tradeName = 'TokenToOGSeed' },
+        { tradeLabel = 'Trade token for 5 Purple Haze seeds', tradeName = 'TokenToPurpleHazeSeed' },
+        { tradeLabel = 'Trade token for 5 Skunk seeds', tradeName = 'TokenToSkunkSeed' },
+        { tradeLabel = 'Trade token for 5 White Widow seeds', tradeName = 'TokenToWhiteWidowSeed' },
+        { tradeLabel = 'Trade token for 10 bags of weed nutrition', tradeName = 'TokenToWeedNutrition' },
+    },
+    coords = vector4(2226.79, 5575.66, 53.64, 193.85),
+    animation = 'WORLD_HUMAN_GARDENER_PLANT',
+}
+
 Config.TokenTraders = {
     uziGuy,
     milRifleGuy,
-    hoboGuy
+    hoboGuy,
+    eastSideGuy,
+    weedGuy
 }
 
 

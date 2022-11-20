@@ -2,7 +2,7 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local useDebug = Config.Debug
 local Entities = {}
 
-local function canInteract(trader) 
+local function checkTimeAvailability(trader)
     if trader.available then
         if trader.available.from > trader.available.to then
             if GetClockHours() >= trader.available.from or GetClockHours() < trader.available.to then return true else return false end
@@ -11,6 +11,19 @@ local function canInteract(trader)
         end
     else
         return true
+    end
+end
+
+local function canInteract(trader, tradeName)
+    local trade = exports['cw-trade']:getTrade(tradeName)
+    if trade and trade.tokenValue then
+        if useDebug then
+           print(tradeName, 'has token trade:', trade.tokenValue)
+        end
+        local hasToken = exports['cw-tokens']:hasToken(trade.tokenValue)
+        if hasToken then return checkTimeAvailability(trader) else return false end
+    else
+        return checkTimeAvailability(trader)
     end
 end
 
@@ -28,7 +41,7 @@ local function getOptions(trader)
                 label = trade.tradeLabel,
                 tradeName = trade.tradeName,
                 canInteract = function()
-                    return canInteract(trader)
+                    return canInteract(trader,trade.tradeName)
                 end
             }
             table.insert(options, option)
@@ -42,7 +55,7 @@ local function getOptions(trader)
                 label = trader.tradeLabel,
                 tradeName = trader.tradeName,
                 canInteract = function()
-                    return canInteract(trader)
+                    return canInteract(trader, trader.tradeName)
                 end
             }}
     end

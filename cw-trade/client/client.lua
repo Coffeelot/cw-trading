@@ -1,8 +1,17 @@
 local QBCore = exports['qb-core']:GetCoreObject() 
 local useDebug = Config.Debug
 
+local function PoliceCall()
+    if Config.PoliceCallChance >= math.random(1, 100) then
+        TriggerServerEvent('police:server:policeAlert', 'Suspicous activity')
+    end
+end
+
 local function attemptTrade(trade)
     TriggerEvent('animations:client:EmoteCommandStart', {"argue2"})
+    if trade.type == 'illegal' then
+        PoliceCall()
+    end
     QBCore.Functions.Progressbar("item_check", 'Discussing trade', 2000, false, true, {
         disableMovement = true,
         disableCarMovement = true,
@@ -109,3 +118,11 @@ RegisterNetEvent('cw-trade:client:toggleDebug', function(debug)
    print('Setting debug to',debug)
    useDebug = debug
 end)
+
+function getTrade(tradeName)
+    if Config.Trades[tradeName] then
+        return Config.Trades[tradeName]
+    else
+        return nil
+    end
+end
