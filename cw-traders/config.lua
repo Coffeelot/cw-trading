@@ -86,6 +86,7 @@ Config.RGBTraders = {
 local uziGuy = {
     name = 'uziGuy',
     model = 'csb_ramp_gang',
+    gang = 'ballas',
     trades = {
         { tradeLabel = 'Trade token for uzi', tradeName = 'TokenToUzi', },
         { tradeLabel = 'Trade token for pistol', tradeName = 'TokenToPistol' },

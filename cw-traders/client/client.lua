@@ -34,10 +34,11 @@ local function getOptions(trader)
             if useDebug then
                print(trade.tradeLabel)
             end
-            local option = { 
+            local option = {
                 type = "client",
                 event = "cw-trade:client:attemptTrade",
                 icon = "fas fa-handshake",
+                gang = trader.gang,
                 label = trade.tradeLabel,
                 tradeName = trade.tradeName,
                 canInteract = function()
@@ -48,10 +49,11 @@ local function getOptions(trader)
         end
     else
         options = {
-            { 
+            {
                 type = "client",
                 event = "cw-trade:client:attemptTrade",
                 icon = "fas fa-handshake",
+                gang = trader.gang,
                 label = trader.tradeLabel,
                 tradeName = trader.tradeName,
                 canInteract = function()
