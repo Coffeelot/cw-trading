@@ -19,7 +19,7 @@ local function hasItem(item, amount)
         local fromItem = exports.ox_inventory:Search('count', item)
         if fromItem < amount then return false end
         return true
-    elseif Config.Inventory == 'ox' then
+    else
         return QBCore.Functions.HasItem(item, amount)
     end
 end
