@@ -1,9 +1,11 @@
 Config = {}
 Config.Debug = false
-
+Config.UseOxInv = false -- toggle to true if you use ox inventory
 
 Config.UseTokens = true
 Config.UseRGB = true
+
+Config.SecretTrades = true -- set this to true if you want trades to not show up if player does not have items
 
 local smelterGuy = {
     name = 'smelterGuy',

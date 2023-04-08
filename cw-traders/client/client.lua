@@ -14,17 +14,69 @@ local function checkTimeAvailability(trader)
     end
 end
 
+local function hasItem(item, amount)
+    if Config.UseOxInv then
+        local fromItem = exports.ox_inventory:Search('count', item)
+        if fromItem < amount then return false end
+        return true
+    elseif Config.Inventory == 'ox' then
+        return QBCore.Functions.HasItem(item, amount)
+    end
+end
+
+local function verifyHasItems(trade)
+    if Config.SecretTrades then
+        local amountOfItemsPlayerHas = 0
+        if trade.fromMoney then
+            local Player = QBCore.Functions.GetPlayerData()
+            return Player.money[trade.fromMoneyType] >= trade.fromMoney
+        else
+            for i,item in pairs(trade.fromItems) do
+                if hasItem(item.name , item.amount) then
+                    if useDebug then
+                       print('Player has '..item.amount..' '..item.name)
+                    end
+                    amountOfItemsPlayerHas = amountOfItemsPlayerHas + 1
+                else
+                    if useDebug then
+                       print('Player DOES NOT have '..item.amount..' '..item.name)
+                    end
+                    return false
+                end
+            end
+        end
+    end 
+    return true
+end
+
+local function verifyRep(trade)
+    if trade and trade.reptype then
+        local rep = exports["mz-skills"]:GetCurrentSkill(trade.reptype).Current
+        return rep > trade.rep
+    end
+    return true
+end
+
+local function verifyHasToken(trade)
+    if trade and trade.tokenValue then
+        local hasToken = exports['cw-tokens']:hasToken(trade.tokenValue)
+        if hasToken then return true else return false end
+    end
+    return true
+end
+
 local function canInteract(trader, tradeName)
     local trade = exports['cw-trade']:getTrade(tradeName)
-    if trade and trade.tokenValue then
-        if useDebug then
-           print(tradeName, 'has token trade:', trade.tokenValue)
-        end
-        local hasToken = exports['cw-tokens']:hasToken(trade.tokenValue)
-        if hasToken then return checkTimeAvailability(trader) else return false end
+    if trade then
+        local hasItems = verifyHasItems(trade)
+        local hasToken = verifyHasToken(trade)
+        local hasRep = verifyRep(trade)
+        local hasTime = checkTimeAvailability(trader)
+        return hasItems and hasToken and hasRep and hasTime
     else
-        return checkTimeAvailability(trader)
+        print('trade', tradeName, 'did not exist')
     end
+    return false
 end
 
 local function getOptions(trader)
@@ -84,7 +136,7 @@ CreateThread(function()
             scenario = animation,
             target = {
                 options = getOptions(v),
-                distance = 3.0 
+                distance = 3.0
             },
             spawnNow = true,
             currentpednumber = 0,
@@ -98,7 +150,7 @@ CreateThread(function()
             else
                 animation = "WORLD_HUMAN_STAND_IMPATIENT"
             end
-    
+
             Entities[#Entities+1] = exports['qb-target']:SpawnPed({
                 model = v.model,
                 coords = v.coords,
@@ -109,12 +161,12 @@ CreateThread(function()
                 scenario = animation,
                 target = {
                     options = getOptions(v),
-                    distance = 3.0 
+                    distance = 3.0
                 },
                 spawnNow = true,
                 currentpednumber = 0,
             })
-        end     
+        end
     end
     if Config.UseRGB then
         for i,v in pairs(Config.RGBTraders) do
@@ -135,12 +187,12 @@ CreateThread(function()
                 scenario = animation,
                 target = {
                     options = getOptions(v),
-                    distance = 3.0 
+                    distance = 3.0
                 },
                 spawnNow = true,
                 currentpednumber = 0,
             })
-        end     
+        end
     end
 
 end)
