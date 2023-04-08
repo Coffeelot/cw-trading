@@ -1,9 +1,10 @@
 Config = {}
 
-
+Config.Inventory = 'ox'
 Config.Debug = false
-Config.UseTokens = false
+Config.UseTokens = true
 Config.PoliceCallChance = 40
+
 local SandwichToBeer = {
     tradeName = 'SandwichToBeer',
     fromItems = {
@@ -24,13 +25,23 @@ local BeerToMeth = {
     },
 }
 
+local SlipToTicket = {
+    tradeName = 'Recycleticket',
+    fromItems = {
+        {name = 'recycleditem', amount = 20}
+    },
+    toItems = {
+        { name = 'matticket', amount = 1 }
+    },
+}
+
 local PhoneToCash = {
     tradeName = 'PhoneToCash',
     fromItems = {
         { name = 'phone', amount = 1 },
     },
     toMoneyType = 'cash',
-    toMoney = { min = 10, max = 20 } 
+    toMoney = { min = 10, max = 20 }
 }
 
 local FoodToGolfClub = {
@@ -53,6 +64,8 @@ local RollsToMeth = {
         { name = 'rolls', amount = 10 },
     },
     type = 'illegal',
+    reptype = 'Street Reputation',
+    rep = 0,
     toItems = {
         { name = 'meth', amount = 10 }
     },
@@ -64,6 +77,8 @@ local RollsToHeavyPistol = {
         { name = 'rolls', amount = 100 },
     },
     type = 'illegal',
+    reptype = 'Street Reputation',
+    rep = 0,
     toItems = {
         { name = 'weapon_heavypistol', amount = 1, info = { serie = ""}}
     },
@@ -75,8 +90,49 @@ local RollsToUzi = {
         { name = 'rolls', amount = 200 },
     },
     type = 'illegal',
+    reptype = 'Street Reputation',
+    rep = 0,
     toItems = {
         { name = 'weapon_microsmg', amount = 1, info = { serie = ""} }
+    },
+}
+
+local NotesToThermite = {
+    tradeName = 'NotesToThermite',
+    fromItems = {
+        { name = 'largenote', amount = 50, }
+    },
+    type = 'illegal',
+    reptype = 'Street Reputation',
+    rep = 100,
+    toItems = {
+        { name = 'thermite', amount = 1}
+    },
+}
+
+local NotesToSMGParts = {
+    tradeName = 'NotesToSMGParts',
+    fromItems = {
+        { name = 'largenote', amount = 200, }
+    },
+    type = 'illegal',
+    reptype = 'Street Reputation',
+    rep = 250,
+    toItems = {
+        { name = 'smgparts', amount = 1}
+    },
+}
+
+local NotesToRifleParts = {
+    tradeName = 'NotesToRifleParts',
+    fromItems = {
+        { name = 'largenote', amount = 450, }
+    },
+    reptype = 'Street Reputation',
+    rep = 500,
+    type = 'illegal',
+    toItems = {
+        { name = 'rifleparts', amount = 1}
     },
 }
 
@@ -185,90 +241,6 @@ local TokenToMilRifle = {
     },
 }
 
-local TokenToWeedNutrition = {
-    tradeName = 'TokenToWeedNutrition',
-    fromItems = {
-        { name = 'cw_token', amount = 1, }
-    },
-    tokenValue = 'tradeWeedNutrition',
-    type = 'illegal',
-    toItems = {
-        { name = 'weed_nutrition', amount = 10}
-    },
-}
-
-local TokenToWhiteWidowSeed = {
-    tradeName = 'TokenToWhiteWidowSeed',
-    fromItems = {
-        { name = 'cw_token', amount = 1, }
-    },
-    tokenValue = 'tradeWeedWhiteWidow',
-    type = 'illegal',
-    toItems = {
-        { name = 'weed_white-widow_seed', amount = 5}
-    },
-}
-
-local TokenToSkunkSeed = {
-    tradeName = 'TokenToSkunkSeed',
-    fromItems = {
-        { name = 'cw_token', amount = 1, }
-    },
-    tokenValue = 'tradeWeedSkunk',
-    type = 'illegal',
-    toItems = {
-        { name = 'weed_skunk_seed', amount = 5}
-    },
-}
-
-local TokenToPurpleHazeSeed = {
-    tradeName = 'TokenToPurpleHazeSeed',
-    fromItems = {
-        { name = 'cw_token', amount = 1, }
-    },
-    tokenValue = 'tradeWeedPurpleHaze',
-    type = 'illegal',
-    toItems = {
-        { name = 'weed_purple-haze_seed', amount = 5}
-    },
-}
-
-local TokenToOGSeed = {
-    tradeName = 'TokenToOGSeed',
-    fromItems = {
-        { name = 'cw_token', amount = 1, }
-    },
-    tokenValue = 'tradeWeedOG',
-    type = 'illegal',
-    toItems = {
-        { name = 'weed_og-kush_seed', amount = 5}
-    },
-}
-
-local TokenToAmnesiaSeed = {
-    tradeName = 'TokenToAmnesiaSeed',
-    fromItems = {
-        { name = 'cw_token', amount = 1, }
-    },
-    tokenValue = 'tradeWeedAmnesia',
-    type = 'illegal',
-    toItems = {
-        { name = 'weed_amnesia_seed', amount = 5}
-    },
-}
-
-local TokenToAKSeed = {
-    tradeName = 'TokenToAKSeed',
-    fromItems = {
-        { name = 'cw_token', amount = 1, }
-    },
-    tokenValue = 'tradeWeedAK',
-    type = 'illegal',
-    toItems = {
-        { name = 'weed_ak47_seed', amount = 5}
-    },
-}
-
 local TokenToMeth = {
     tradeName = 'TokenToMeth',
     fromItems = {
@@ -293,8 +265,6 @@ local TokenToCrack = {
     },
 }
 
-
-
 Config.Trades = {
     ['SandwichToBeer'] = SandwichToBeer,
     ['PhoneToCash'] = PhoneToCash,
@@ -310,14 +280,12 @@ Config.Trades = {
     ['TokenToPistol'] = TokenToPistol,
     ['TokenToSawedOff'] = TokenToSawedOff,
     ['TokenToMolotov'] = TokenToMolotov,
-    ['TokenToDoubleBarrel'] = TokenToMilRifle,
-    ['TokenToWhiteWidowSeed'] = TokenToWhiteWidowSeed,
-    ['TokenToSkunkSeed'] = TokenToSkunkSeed,
-    ['TokenToPurpleHazeSeed'] = TokenToPurpleHazeSeed,
-    ['TokenToOGSeed'] = TokenToOGSeed,
-    ['TokenToAmnesiaSeed'] = TokenToAmnesiaSeed,
-    ['TokenToAKSeed'] = TokenToAKSeed,
-    ['TokenToWeedNutrition'] = TokenToWeedNutrition,
+    ['TokenToDoubleBarrel'] = TokenToDoubleBarrel,
     ['TokenToCrack'] = TokenToCrack,
     ['TokenToMeth'] = TokenToMeth,
+    ['NotesToThermite'] = NotesToThermite,
+    ['TokenToMilRifle'] = TokenToMilRifle,
+    ['NotesToSMGParts'] = NotesToSMGParts,
+    ['NotesToRifleParts'] = NotesToRifleParts,
+    ['SlipToTicket'] = SlipToTicket,
 }

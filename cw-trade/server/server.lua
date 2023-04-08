@@ -1,5 +1,34 @@
-local QBCore = exports['qb-core']:GetCoreObject() 
+local QBCore = exports['qb-core']:GetCoreObject()
 local useDebug = Config.Debug
+
+local function getQBItem(item)
+    local qbItem = QBCore.Shared.Items[item]
+    if qbItem then
+        return qbItem
+    else
+        print('Someone forgot to add the item')
+    end
+end
+
+local function addItem(item, amount, info, source)
+    if Config.Inventory == 'qb' then
+    	local Player = QBCore.Functions.GetPlayer(source)
+        Player.Functions.AddItem(item, amount, nil, info)
+        TriggerClientEvent('inventory:client:ItemBox', source, getQBItem(item), "add")
+    elseif Config.Inventory == 'ox' then
+        exports.ox_inventory:AddItem(source, item, amount, info)
+    end
+end
+
+local function removeItem(item, amount, source)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Config.Inventory == 'qb' then
+        Player.Functions.RemoveItem(item, amount, nil)
+        TriggerClientEvent('inventory:client:ItemBox', source, getQBItem(item), "remove")
+    elseif Config.Inventory == 'ox' then
+        exports.ox_inventory:RemoveItem(source, item, amount, nil, nil)
+    end
+end
 
 RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
     local src = source
@@ -13,9 +42,8 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
         for i, item in pairs(trade.toItems) do
             if useDebug then
                 print('adding items to pockets (from token trade)')
-             end
-            Player.Functions.AddItem(item.name, item.amount)
-            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
+            end
+            addItem(item.name, item.amount,nil, src)
         end
     else
         if trade.fromMoney then
@@ -26,15 +54,14 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
             if trade.fromMoneyType then
                 moneyType = trade.fromMoneyType
             end
-            Player.Functions.RemoveMoney(moneyType, trade.fromMoney)
+            Player.Functions.RemoveMoney(moneyType, trade.fromMoney, 'Cw-Trades')
         end
         if trade.fromItems then
             for i, item in pairs(trade.fromItems) do
                 if useDebug then
                    print('removing items from pockets')
                 end
-                Player.Functions.RemoveItem(item.name, item.amount)
-                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "remove")
+                removeItem(item.name, item.amount, src)
             end
         end
 
@@ -55,12 +82,7 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
                 if useDebug then
                    print('adding items to pockets')
                 end
-                if item.info then
-                    Player.Functions.AddItem(item.name, item.amount, nil, item.info)
-                else
-                    Player.Functions.AddItem(item.name, item.amount)
-                end
-                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.name], "add")
+                addItem(item.name, item.amount, item.info, src)
             end
         end
         if trade.toBills then
@@ -70,22 +92,21 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
             local info = {
                 worth = math.random(trade.toBills.min, trade.toBills.max)
             }
-            Player.Functions.AddItem('markedbills', math.random(1,2), false, info)
-            TriggerClientEvent('inventory:client:ItemBox',src, QBCore.Shared.Items['markedbills'], "add")
+            addItem('markedbills', math.random(1,2), info, src)
         end
         if trade.toCrypto then
             if useDebug then
                 print('Doing Crypto Trade')
              end
             local payout = math.random(trade.toCrypto.min, trade.toCrypto.max)
-            Player.Functions.AddMoney('crypto', tonumber(payout)) 
-        end    
+            Player.Functions.AddMoney('crypto', tonumber(payout))
+        end
     end
-
+    TriggerClientEvent('cw-trade:client:freeinventory', src)
 end)
 
 QBCore.Commands.Add('cwdebugtrade', 'toggle debug for trade', {}, true, function(source, args)
     useDebug = not useDebug
     print('debug is now:', useDebug)
     TriggerClientEvent('cw-trade:client:toggleDebug',source, useDebug)
-end, 'admin')
+end, 'dev')
