@@ -30,7 +30,7 @@ local function removeItem(item, amount, source)
     end
 end
 
-RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
+RegisterServerEvent('cw-trade:server:tradeItems', function(trade, modifier)
     local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
 
@@ -40,10 +40,14 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
         end
         TriggerEvent('cw-tokens:server:TakeToken', src, trade.tokenValue)
         for i, item in pairs(trade.toItems) do
+            local total = item.amount
+            if modifier then
+                total = item.amount*modifier
+            end
             if useDebug then
                 print('adding items to pockets (from token trade)')
             end
-            addItem(item.name, item.amount,nil, src)
+            addItem(item.name, total,nil, src)
         end
     else
         if trade.fromMoney then
@@ -58,10 +62,14 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
         end
         if trade.fromItems then
             for i, item in pairs(trade.fromItems) do
+                local total = item.amount
+                if modifier then
+                    total = item.amount*modifier
+                end
                 if useDebug then
                    print('removing items from pockets')
                 end
-                removeItem(item.name, item.amount, src)
+                removeItem(item.name, total, src)
             end
         end
 
@@ -79,10 +87,14 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade)
 
         if trade.toItems then
             for i, item in pairs(trade.toItems) do
+                local total = item.amount
+                if modifier then
+                    total = item.amount*modifier
+                end
                 if useDebug then
                    print('adding items to pockets')
                 end
-                addItem(item.name, item.amount, item.info, src)
+                addItem(item.name, total, item.info, src)
             end
         end
         if trade.toBills then

@@ -19,7 +19,7 @@ local function hasItem(item, amount)
     end
 end
 
-local function attemptTrade(trade)
+local function attemptTrade(trade, modifier)
     TriggerEvent('animations:client:EmoteCommandStart', {"argue2"})
     if trade.type == 'illegal' then
         PoliceCall()
@@ -44,33 +44,31 @@ local function attemptTrade(trade)
                 local tokenName = trade.tokenValue
                 QBCore.Functions.TriggerCallback('cw-tokens:server:PlayerHasToken', function(result, value)
                     tokens = result
-                end)
-                Wait(100)
-                if tokens[tokenName] ~= nil then
-                    if useDebug then
-                    print('found a token with '..tokenName)
+                    if tokens[tokenName] ~= nil then
+                        if useDebug then
+                        print('found a token with '..tokenName)
+                        end
+                        TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                        TriggerServerEvent('cw-trade:server:tradeItems', trade, modifier)
+                    else
+                        TriggerEvent('animations:client:EmoteCommandStart', {"damn"})
+                        QBCore.Functions.Notify('You do not have the right token on you.' , 'error')
                     end
-                    TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-                    TriggerServerEvent('cw-trade:server:tradeItems', trade)
-                else
-                    TriggerEvent('animations:client:EmoteCommandStart', {"damn"})
-                    QBCore.Functions.Notify('You do not have the right token on you.' , 'error')
-                end
+                end)
             else
                 if useDebug then
                    print('Trade was initiated - calling server side')
                 end
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-                TriggerServerEvent('cw-trade:server:tradeItems', trade)
+                TriggerServerEvent('cw-trade:server:tradeItems', trade, modifier)
             end
         end, function()
             TriggerEvent('animations:client:EmoteCommandStart', {"damn"})
             QBCore.Functions.Notify('You do not have the required items on you.' , 'error')
         end)
-    LocalPlayer.state.invBusy = false
 end
 
-RegisterNetEvent('cw-trade:client:attemptTrade', function(data)
+RegisterNetEvent('cw-trade:client:attemptTrade', function(data, modifier)
     local tradeName = data.tradeName
     local trade = Config.Trades[tradeName]
     if useDebug then
@@ -78,21 +76,24 @@ RegisterNetEvent('cw-trade:client:attemptTrade', function(data)
     end
 
     if trade then
-        LocalPlayer.state.invBusy = true
         local amountOfItemsPlayerHas = 0
         if trade.fromItems then
             if useDebug then
                print('amount of From items:', #trade.fromItems)
             end
             for i,item in pairs(trade.fromItems) do
-                if hasItem(item.name , item.amount) then
+                local total = item.amount
+                if modifier then
+                    total = item.amount*modifier
+                end
+                if hasItem(item.name , total) then
                     if useDebug then
-                       print('Player has '..item.amount..' '..item.name)
+                       print('Player has '..total..' '..item.name)
                     end
                     amountOfItemsPlayerHas = amountOfItemsPlayerHas + 1
                 else
                     if useDebug then
-                       print('Player doesnt have '..item.amount..' '..item.name)
+                       print('Player doesnt have '..total..' '..item.name)
                     end
                     if not QBCore.Shared.Items[item.name] then
                         print('Item does not exist in qbcore shared items!', item.name)
@@ -110,10 +111,9 @@ RegisterNetEvent('cw-trade:client:attemptTrade', function(data)
             if (amountOfItemsPlayerHas == #trade.fromItems) then
                 local Player = QBCore.Functions.GetPlayerData()
 
-                attemptTrade(trade)
+                attemptTrade(trade, modifier)
             end
         else
-            LocalPlayer.state.invBusy = true
             if useDebug then
                 print('Handling a cash trade without items')
                 print('Amount: ', trade.fromMoney)
