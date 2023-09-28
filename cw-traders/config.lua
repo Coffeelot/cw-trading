@@ -24,6 +24,8 @@ local bumGuy = {
     tradeLabel = 'Trade 5 beers for a bag of meth',
     coords = vector4(934.5, -1903.48, 31.12, 89.13),
     animation = 'WORLD_HUMAN_BUM_STANDING',
+    allowBatchTrade = true, -- example of how to enable batch trading
+    batchTradeLabel = 'Trade multiple beers for meth'
 }
 
 local golfGuy = {
@@ -48,7 +50,7 @@ local shadyGuy = { -- Note that this guy is NOT included in the below Config.Tra
     name = 'shadyGuy',
     model = 'g_m_y_famfor_01',
     trades = {
-        { tradeLabel = 'Trade 10 rolls to 10 bags of meth', tradeName = 'RollsToMeth' },
+        { tradeLabel = 'Trade 10 rolls to 10 bags of meth', tradeName = 'RollsToMeth', batchTradeLabel = 'Trade multiple rolls to multiple bags of meth', allowBatchTrade = true }, -- example of how to enable batch trading per trade
         { tradeLabel = 'Trade 200 rolls to heavy pistol', tradeName = 'RollsToHeavyPistol' },
         { tradeLabel = 'Trade 300 rolls to uzi', tradeName = 'RollsToUzi' },
     }, 

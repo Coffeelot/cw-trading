@@ -104,7 +104,7 @@ local NotesToThermite = {
     },
     type = 'illegal',
     reptype = 'Street Reputation',
-    rep = 100,
+    rep = 1000,
     toItems = {
         { name = 'thermite', amount = 1}
     },
