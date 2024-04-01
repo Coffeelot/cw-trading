@@ -82,6 +82,9 @@ RegisterServerEvent('cw-trade:server:tradeItems', function(trade, modifier)
                 moneyType = trade.toMoneyType
             end
             local payout = math.random(trade.toMoney.min, trade.toMoney.max)
+            if modifier then
+                payout = payout*modifier
+            end
             Player.Functions.AddMoney(moneyType, tonumber(payout))
         end
 
